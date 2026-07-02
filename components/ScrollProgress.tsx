@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayoutEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 
 export function ScrollProgress() {
@@ -9,6 +10,16 @@ export function ScrollProgress() {
     damping: 40,
     restDelta: 0.001,
   });
+
+  useLayoutEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    if (window.location.hash) {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <motion.div
