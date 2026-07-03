@@ -54,7 +54,7 @@ function HeroCover() {
           fill
           priority
           sizes="(min-width: 1024px) 60vw, 100vw"
-          className="object-cover object-[center_60%] lg:object-[center_68%]"
+          className="object-cover object-[center_42%] lg:object-[center_46%]"
         />
       </motion.div>
       {/* mobile/tablet: text spans full width, so the photo needs a fairly even scrim everywhere */}
@@ -148,7 +148,7 @@ export function Hero() {
   return (
     <div
       id="top"
-      className="relative flex flex-col overflow-x-hidden bg-paper font-sans text-ink antialiased selection:bg-sand selection:text-ink lg:min-h-screen"
+      className="relative flex flex-col bg-paper font-sans text-ink antialiased selection:bg-sand selection:text-ink lg:min-h-screen"
     >
       <Header />
 

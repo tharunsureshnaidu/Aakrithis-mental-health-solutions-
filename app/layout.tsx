@@ -33,11 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${plexMono.variable} h-full overflow-x-hidden antialiased`}
-    >
-      <body className="flex min-h-full flex-col overflow-x-hidden">{children}</body>
+    <html lang="en" className={`${fraunces.variable} ${inter.variable} ${plexMono.variable} antialiased`}>
+      <body className="flex min-h-screen flex-col overflow-x-hidden">{children}</body>
     </html>
   );
 }
