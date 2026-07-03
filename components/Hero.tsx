@@ -54,7 +54,7 @@ function HeroCover() {
           fill
           priority
           sizes="(min-width: 1024px) 60vw, 100vw"
-          className="object-cover object-[center_42%] lg:object-[center_46%]"
+          className="object-contain object-top"
         />
       </motion.div>
       {/* mobile/tablet: text spans full width, so the photo needs a fairly even scrim everywhere */}
