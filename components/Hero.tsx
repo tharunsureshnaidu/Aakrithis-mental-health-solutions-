@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Check } from "lucide-react";
 import { Header } from "@/components/Header";
 import { CallCta } from "@/components/CallCta";
 import { PILLARS } from "@/lib/clinic-data";
 
-const HEADLINE = "Here for your family,\nat every step.";
+const HEADLINE = "You don't have to\nhave it figured out.";
 
 function useTypewriter(text: string, speed = 38, startDelay = 600) {
   const [displayed, setDisplayed] = useState("");
@@ -37,53 +38,31 @@ function useTypewriter(text: string, speed = 38, startDelay = 600) {
   return { displayed, done };
 }
 
-function useVideoScrub(videoRef: React.RefObject<HTMLVideoElement | null>) {
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+function HeroCover() {
+  const prefersReduced = useReducedMotion();
 
-    let prevX: number | null = null;
-    let duration = 0;
-
-    function onLoadedMetadata() {
-      if (video) duration = video.duration;
-    }
-
-    function onMouseMove(e: MouseEvent) {
-      if (window.innerWidth < 1024) return;
-      if (!video || !duration || !isFinite(duration)) return;
-      if (prevX === null) {
-        prevX = e.clientX;
-        return;
-      }
-      const deltaX = e.clientX - prevX;
-      prevX = e.clientX;
-      const next = video.currentTime + (deltaX / window.innerWidth) * 0.8 * duration;
-      video.currentTime = Math.min(Math.max(next, 0), duration);
-    }
-
-    function onSeeked() {}
-
-    video.addEventListener("loadedmetadata", onLoadedMetadata);
-    if (video.readyState >= 1) duration = video.duration;
-    window.addEventListener("mousemove", onMouseMove);
-    video.addEventListener("seeked", onSeeked);
-
-    return () => {
-      video.removeEventListener("loadedmetadata", onLoadedMetadata);
-      window.removeEventListener("mousemove", onMouseMove);
-      video.removeEventListener("seeked", onSeeked);
-    };
-  }, [videoRef]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (window.innerWidth < 1024) {
-      video.autoplay = true;
-      video.play().catch(() => {});
-    }
-  }, [videoRef]);
+  return (
+    <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+      <motion.div
+        className="absolute inset-0"
+        animate={prefersReduced ? undefined : { scale: [1, 1.08, 1] }}
+        transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Image
+          src="/images/office-cover.jpg"
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1024px) 60vw, 100vw"
+          className="object-cover object-[center_60%] lg:object-[center_68%]"
+        />
+      </motion.div>
+      {/* mobile/tablet: text spans full width, so the photo needs a fairly even scrim everywhere */}
+      <div className="absolute inset-0 bg-paper/78 lg:hidden" />
+      {/* desktop: text sits only on the left, so fade the photo in from the right instead */}
+      <div className="absolute inset-0 hidden bg-gradient-to-r from-paper from-[8%] via-paper/45 via-[32%] to-transparent to-[58%] lg:block" />
+    </div>
+  );
 }
 
 function ServicePills() {
@@ -96,7 +75,7 @@ function ServicePills() {
 
   return (
     <div>
-      <h2 className="mb-2 text-2xl font-medium tracking-tight text-ink">What sort of service?</h2>
+      <h2 className="mb-2 text-2xl font-medium tracking-tight text-ink">What brings you here?</h2>
       <p className="mb-8 text-ink-soft opacity-85">Select all that apply</p>
 
       <div className="mb-6 flex flex-wrap gap-3">
@@ -111,7 +90,7 @@ function ServicePills() {
               className={
                 active
                   ? "flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-white shadow-md shadow-ink/10 transform"
-                  : "flex items-center gap-2 rounded-full border border-pink-line bg-white px-5 py-2.5 text-sm font-medium text-ink hover:bg-pink-line/40"
+                  : "flex items-center gap-2 rounded-full border border-line bg-white px-5 py-2.5 text-sm font-medium text-ink hover:bg-line/40"
               }
             >
               {label}
@@ -139,7 +118,7 @@ function ServicePills() {
             exit={{ opacity: 0 }}
             className="text-xs italic text-ink-soft"
           >
-            Please click to select services above.
+            Tap what applies — we&apos;ll tailor the conversation.
           </motion.p>
         ) : (
           <motion.div
@@ -148,12 +127,12 @@ function ServicePills() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="overflow-hidden rounded-2xl border border-pink-line bg-[#FAFBF9]"
+            className="overflow-hidden rounded-2xl border border-line bg-[#FAFBF9]"
           >
             <div className="flex items-center justify-between gap-4 p-5">
-              <p className="text-sm text-ink">Ready to inquire about: {selected.join(", ")}</p>
-              <CallCta className="whitespace-nowrap text-xs font-semibold uppercase text-pink-deep">
-                Let&apos;s Go
+              <p className="text-sm text-ink">Ready to talk about: {selected.join(", ")}</p>
+              <CallCta className="whitespace-nowrap text-xs font-semibold uppercase text-forest">
+                Let&apos;s talk
               </CallCta>
             </div>
           </motion.div>
@@ -164,34 +143,31 @@ function ServicePills() {
 }
 
 export function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const { displayed, done } = useTypewriter(HEADLINE);
-  useVideoScrub(videoRef);
 
   return (
     <div
       id="top"
-      className="relative flex flex-col overflow-x-hidden bg-white font-sans text-ink antialiased selection:bg-blush selection:text-ink lg:block lg:min-h-screen"
+      className="relative flex flex-col overflow-x-hidden bg-paper font-sans text-ink antialiased selection:bg-sand selection:text-ink lg:min-h-screen"
     >
       <Header />
 
-      <div className="hidden overflow-hidden bg-neutral-50 pointer-events-none lg:absolute lg:inset-0 lg:z-0 lg:block lg:h-full lg:bg-transparent">
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          preload="auto"
-          src="/videos/hero-scrub.mp4"
-          className="h-full w-full object-cover object-right-bottom"
-        />
-      </div>
+      <HeroCover />
 
-      <div className="relative z-10 hidden w-full flex-col bg-white pb-8 lg:flex lg:min-h-screen lg:bg-transparent lg:pb-0">
-        <main id="spade-hero" className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 py-12 pt-24">
+      <div className="relative z-10 flex w-full flex-col pb-8 lg:min-h-screen lg:pb-0">
+        <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 py-12 pt-28 sm:px-8 lg:px-6">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-4 font-mono text-xs uppercase tracking-widest text-forest"
+          >
+            Modern Therapy Meets Ancient Wisdom
+          </motion.p>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <h1 className="mb-8 w-full select-none whitespace-pre-wrap text-5xl font-normal leading-[1.08] tracking-tight text-black md:text-6xl lg:text-[76px]">
+            <h1 className="mb-8 w-full select-none whitespace-pre-wrap text-4xl font-normal leading-[1.1] tracking-tight text-ink sm:text-5xl md:text-6xl lg:text-[76px]">
               {displayed}
-              {!done && <span className="ml-[2px] inline-block h-[1.1em] w-[2px] animate-blink bg-black align-middle" />}
+              {!done && <span className="ml-[2px] inline-block h-[1.1em] w-[2px] animate-blink bg-ink align-middle" />}
             </h1>
           </motion.div>
 
@@ -201,8 +177,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <p className="mb-14 max-w-2xl text-lg font-normal leading-relaxed text-ink-soft md:text-xl">
-              Whether it&apos;s a check-up, a question, or a shot that&apos;s due, <br />
-              reach out and we&apos;ll get back to you as soon as possible.
+              Call, WhatsApp, or just ask a question first — <br />
+              we reply the same day.
             </p>
           </motion.div>
 

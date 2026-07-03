@@ -22,9 +22,9 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Olavu Clinic — Pediatrics, Psychiatry, Allergy-Asthma & Vaccination",
+  title: "Aakrithi's Mental Health Solutions & Academy — Counseling & Training in Bengaluru",
   description:
-    "Olavu Clinic in Girinagar, Bengaluru — pediatrics, psychiatry, allergy-asthma and vaccination care for the whole family.",
+    "Aakrithi's Mental Health Solutions & Academy in Srinagar, Bengaluru — individual, child, couples and family counseling, plus a training academy for aspiring practitioners.",
 };
 
 export default function RootLayout({

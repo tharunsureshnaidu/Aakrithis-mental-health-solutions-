@@ -38,20 +38,20 @@ export function Pillars() {
       <motion.p
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.4 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.5 }}
-        className="mb-3 font-mono text-xs uppercase tracking-widest text-pink-deep"
+        className="mb-3 font-mono text-xs uppercase tracking-widest text-forest"
       >
-        What we treat
+        What we offer
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.4 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.5, delay: 0.05 }}
         className="max-w-[26ch] font-display text-3xl font-semibold sm:text-4xl"
       >
-        Four specialities. One continuous record.
+        Counseling, therapy and training — all in one place.
       </motion.h2>
 
       <div className="mt-12 grid gap-12 md:grid-cols-2 md:items-center md:gap-16">
@@ -81,10 +81,10 @@ export function Pillars() {
                       fill
                       sizes="(min-width: 768px) 24rem, 90vw"
                       draggable={false}
-                      className={`rounded-3xl object-cover shadow-[0_20px_50px_-20px_rgba(31,35,64,0.4)] ${p.photoPosition ?? "object-[center_15%]"}`}
+                      className={`rounded-3xl object-cover shadow-[0_20px_50px_-20px_rgba(36,50,31,0.4)] ${p.photoPosition ?? "object-[center_15%]"}`}
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center rounded-3xl bg-blush font-mono text-4xl font-semibold text-pink-deep shadow-[0_20px_50px_-20px_rgba(31,35,64,0.4)]">
+                    <div className="flex h-full w-full items-center justify-center rounded-3xl bg-sand font-mono text-4xl font-semibold text-forest shadow-[0_20px_50px_-20px_rgba(36,50,31,0.4)]">
                       {initials(p.doctor)}
                     </div>
                   )}
@@ -104,7 +104,7 @@ export function Pillars() {
               transition={{ duration: 0.25, ease: "easeInOut" }}
             >
               <h3 className="font-display text-2xl font-semibold sm:text-3xl">{current.title}</h3>
-              <p className="mt-1 font-mono text-sm text-pink-deep">{current.doctor}</p>
+              <p className="mt-1 font-mono text-sm text-forest">{current.doctor}</p>
               <p className="mt-6 max-w-[55ch] text-ink-soft">
                 {current.blurb.split(" ").map((word, i) => (
                   <motion.span
@@ -121,7 +121,7 @@ export function Pillars() {
               <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
                 {current.services.map((s) => (
                   <li key={s} className="flex items-start gap-2.5 text-[0.95rem]">
-                    <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-pink" />
+                    <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sage" />
                     {s}
                   </li>
                 ))}
@@ -134,7 +134,7 @@ export function Pillars() {
               type="button"
               onClick={prev}
               aria-label="Previous speciality"
-              className="group flex h-9 w-9 items-center justify-center rounded-full bg-blush transition-colors hover:bg-pink-line"
+              className="group flex h-9 w-9 items-center justify-center rounded-full bg-sand transition-colors hover:bg-line"
             >
               <ArrowLeft className="h-4 w-4 text-ink transition-transform group-hover:-translate-x-0.5" />
             </button>
@@ -142,7 +142,7 @@ export function Pillars() {
               type="button"
               onClick={next}
               aria-label="Next speciality"
-              className="group flex h-9 w-9 items-center justify-center rounded-full bg-blush transition-colors hover:bg-pink-line"
+              className="group flex h-9 w-9 items-center justify-center rounded-full bg-sand transition-colors hover:bg-line"
             >
               <ArrowRight className="h-4 w-4 text-ink transition-transform group-hover:translate-x-0.5" />
             </button>

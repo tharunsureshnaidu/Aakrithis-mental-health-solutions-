@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #ffffff;
-  --blush: #fdeef6;
-  --ink: #1b2340;
-  --ink-soft: #5b6178;
-  --pink: #d6259b;
-  --pink-deep: #a81c79;
-  --pink-line: #f3c9e3;
+  --paper: #f7f1e4;
+  --sand: #ece4d0;
+  --ink: #23301f;
+  --ink-soft: #57685a;
+  --sage: #5c7a67;
+  --forest: #2b3d2c;
+  --line: #dad2b7;
 }
 
 @theme inline {
   --color-paper: var(--paper);
-  --color-blush: var(--blush);
+  --color-sand: var(--sand);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
-  --color-pink: var(--pink);
-  --color-pink-deep: var(--pink-deep);
-  --color-pink-line: var(--pink-line);
+  --color-sage: var(--sage);
+  --color-forest: var(--forest);
+  --color-line: var(--line);
 
   --font-display: var(--font-fraunces);
   --font-body: var(--font-inter);
@@ -38,13 +38,13 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--pink);
+  outline: 2px solid var(--sage);
   outline-offset: 3px;
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-pink px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_24px_-10px_rgba(214,37,155,0.55)] transition-all hover:-translate-y-0.5 hover:bg-pink-deep;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-sage px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_24px_-10px_rgba(92,122,103,0.55)] transition-all hover:-translate-y-0.5 hover:bg-forest;
   }
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink px-6 py-3.5 text-sm font-semibold text-ink transition-all hover:-translate-y-0.5 hover:bg-ink hover:text-white;
